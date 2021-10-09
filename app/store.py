@@ -22,3 +22,6 @@ class Store:
     def _init_items_table(self):
         for i in self.items:
             self.items_table.insert(StoreItem(i, 5))
+
+    def find_item(self, key):
+        return self.items_table.find(key)

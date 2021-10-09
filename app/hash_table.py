@@ -56,7 +56,7 @@ class HashTable:
         index = simple_hash_key
         while self.data[index] is not None:
             if self.data[index].key == key:
-                print(f"Item '{key}' found at index {index}")
+                LOG.info(f"Item '{key}' found at index {index}")
                 return self.data[index]
             i += 1
             index = (simple_hash_key + (i * second_hash_key)) % self.size
