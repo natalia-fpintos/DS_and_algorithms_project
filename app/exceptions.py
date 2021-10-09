@@ -3,4 +3,4 @@ class StructureIsFullError(Exception):
     def __init__(self, structure):
         self.structure = structure
         self.message = f'The {structure} is full, cannot add any more items'
-
+        super().__init__(self.message)
