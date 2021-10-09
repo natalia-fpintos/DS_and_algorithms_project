@@ -1,7 +1,10 @@
+import logging
 from app.exceptions import StructureIsFullError
 
+LOG = logging.getLogger(__name__)
 
-class HashMap:
+
+class HashTable:
     def __init__(self, size):
         """Size must be a prime number to prevent infinite loop when probing for insertion"""
         self.data = [None for _ in range(size)]
@@ -31,17 +34,29 @@ class HashMap:
 
     def insert(self, item):
         if self.is_full():
-            raise StructureIsFullError(HashMap.__name__)
+            raise StructureIsFullError(HashTable.__name__)
 
         simple_hash_key = self.simple_hashing(item.key)
         second_hash_key = self.double_hashing(item.key)
         i = 0
         index = simple_hash_key
         while self.data[index] is not None:
-            print(f"Collision inserting at key {index}")
+            LOG.debug(f"Collision for '{item.key}' inserting at index {index}")
             self.collisions += 1
             i += 1
             index = (simple_hash_key + (i * second_hash_key)) % self.size
 
         self.data[index] = item
         self.count += 1
+
+    def find(self, key):
+        simple_hash_key = self.simple_hashing(key)
+        second_hash_key = self.double_hashing(key)
+        i = 0
+        index = simple_hash_key
+        while self.data[index] is not None:
+            if self.data[index].key == key:
+                print(f"Item '{key}' found at index {index}")
+                return self.data[index]
+            i += 1
+            index = (simple_hash_key + (i * second_hash_key)) % self.size
