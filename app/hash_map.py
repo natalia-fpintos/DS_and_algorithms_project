@@ -17,12 +17,20 @@ class HashMap:
             result += ord(v) * (self.hashing_base ** i)
         return result % self.size
 
-    def insert(self, item):
-        hash_key = self.hashing(item.key)
-        while self.data[hash_key] is not None:
-            print(f"Collision inserting at key {hash_key}")
-            hash_key += 1
-            hash_key %= self.size
+    def double_hashing(self, key):
+        PRIME = 7 if self.size > 7 else 1
+        return PRIME - (key % PRIME)
 
-        self.data[hash_key] = item
-        self.count += 1
+    def insert(self, item):
+        if not self.is_full():
+            hash_key = self.hashing(item.key)
+            while self.data[hash_key] is not None:
+                print(f"Collision inserting at key {hash_key}")
+                hash_key += 1
+                hash_key %= self.size
+    
+            self.data[hash_key] = item
+            self.count += 1
+        else:
+            raise StructureIsFullError(HashMap.name)
+

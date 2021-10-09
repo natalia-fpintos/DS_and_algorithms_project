@@ -24,6 +24,10 @@ class TestHashMap(unittest.TestCase):
         hash_map = HashMap(1)
         self.assertEqual(1, hash_map.hashing('a_key'))
         self.assertEqual(26, hash_map.hashing('b_key'))
+        
+    def test_double_hashing(self):
+        hash_map = HashMap(10)
+        self.assertEqual(1, hash_map.double_hashing('a_key'))
 
     def test_insert(self):
         hash_map = HashMap(5)
