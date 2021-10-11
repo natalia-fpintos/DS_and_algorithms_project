@@ -25,3 +25,6 @@ class Store:
 
     def find_item(self, key):
         return self.items_table.find(key)
+
+    def update_stock(self, item, quantity):
+        self.items_table.find(item).stock = quantity
