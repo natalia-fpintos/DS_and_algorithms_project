@@ -63,10 +63,18 @@ class TestHashTable(unittest.TestCase):
         items = [StoreItem("apple", 3), StoreItem("banana", 3), StoreItem("orange", 3), StoreItem("cherry", 3)]
         for i in items:
             hash_table.insert(i)
-        self.assertEqual(items[0], hash_table.find(items[0].key))
-        self.assertEqual(items[1], hash_table.find(items[1].key))
-        self.assertEqual(items[2], hash_table.find(items[2].key))
-        self.assertEqual(items[3], hash_table.find(items[3].key))
+        self.assertEqual(items[0], hash_table.find_item(items[0].key))
+        self.assertEqual(items[1], hash_table.find_item(items[1].key))
+        self.assertEqual(items[2], hash_table.find_item(items[2].key))
+        self.assertEqual(items[3], hash_table.find_item(items[3].key))
+
+    def test_delete_removes_item(self):
+        hash_table = HashTable(5)
+        item = StoreItem("apple", 3)
+        hash_table.insert(item)
+        self.assertFalse(hash_table.is_empty())
+        hash_table.delete(item.key)
+        self.assertTrue(hash_table.is_empty())
 
 
 if __name__ == '__main__':

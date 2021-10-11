@@ -28,17 +28,17 @@ class Client:
         self.store = store
 
     def add_item_to_cart(self, item_key, quantity=1):
-        found = self.store.find_item(item_key)
-        if not found:
-            LOG.error(f'Could not find item {item_key} in the store')
+        if self.store.remove_stock(item_key, quantity):
+            self.cart.insert(CartItem(item_key, quantity))
+
+    def remove_item_from_cart(self, item_key):
+        cart_item = self.cart.find_item(item_key)
+        if not cart_item:
+            LOG.error(f'Could not find item {cart_item} in the cart')
             return
 
-        if found.stock >= quantity:
-            self.store.update_stock(item_key, found.stock - quantity)
-            self.cart.insert(CartItem(found.name, quantity))
-
-    def remove_item_from_cart(self, item):
-        pass
+        if self.store.add_stock(item_key, cart_item.quantity):
+            self.cart.delete(item_key)
 
     def increment_quantity(self, item, quantity):
         pass

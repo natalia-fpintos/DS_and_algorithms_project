@@ -24,7 +24,17 @@ class Store:
             self.items_table.insert(StoreItem(i, 5))
 
     def find_item(self, key):
-        return self.items_table.find(key)
+        return self.items_table.find_item(key)
 
-    def update_stock(self, item, quantity):
-        self.items_table.find(item).stock = quantity
+    def add_stock(self, item_key, quantity):
+        item = self.items_table.find_item(item_key)
+        if item:
+            item.stock += quantity
+        return item is not None
+
+    def remove_stock(self, item_key, quantity):
+        item = self.items_table.find_item(item_key)
+        if item and item.stock >= quantity:
+            item.stock -= quantity
+            return True
+        return False

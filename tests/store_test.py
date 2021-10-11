@@ -13,9 +13,13 @@ class StoreTest(unittest.TestCase):
         self.assertEqual(5, self.store.items_table.size)
         self.assertTrue(self.store.items_table.is_full())
 
-    def test_update_stock(self):
-        self.store.update_stock('c', 1)
-        self.assertEqual(3, self.store.find_item('c').stock)
+    def test_add_stock(self):
+        self.store.add_stock('c', 1)
+        self.assertEqual(6, self.store.find_item('c').stock)
+
+    def test_remove_stock(self):
+        self.store.remove_stock('c', 1)
+        self.assertEqual(4, self.store.find_item('c').stock)
 
 
 if __name__ == '__main__':

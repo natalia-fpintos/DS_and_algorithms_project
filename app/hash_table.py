@@ -49,7 +49,7 @@ class HashTable:
         self.data[index] = item
         self.count += 1
 
-    def find(self, key):
+    def _find_index(self, key):
         simple_hash_key = self.simple_hashing(key)
         second_hash_key = self.double_hashing(key)
         i = 0
@@ -57,6 +57,15 @@ class HashTable:
         while self.data[index] is not None:
             if self.data[index].key == key:
                 LOG.info(f"Item '{key}' found at index {index}")
-                return self.data[index]
+                return index
             i += 1
             index = (simple_hash_key + (i * second_hash_key)) % self.size
+
+    def find_item(self, key):
+        index = self._find_index(key)
+        return self.data[index] if index is not None else None
+
+    def delete(self, key):
+        index = self._find_index(key)
+        self.data[index] = None
+        self.count -= 1
