@@ -1,5 +1,5 @@
 import logging
-from app.hash_table import HashTable
+from app.structures.hash_table import HashTable
 
 
 LOG = logging.getLogger(__name__)
