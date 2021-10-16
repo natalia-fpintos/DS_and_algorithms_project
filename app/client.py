@@ -47,7 +47,7 @@ class Client:
         pass
 
     def search_item(self, search_term):
-        pass
+        return self.store.autocomplete(search_term)
 
     def checkout(self):
         pass

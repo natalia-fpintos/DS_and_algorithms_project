@@ -18,3 +18,5 @@ if __name__ == '__main__':
     client.add_item_to_cart('potatoes', 3)
     client.add_item_to_cart('cookies', 4)
     client.remove_item_from_cart('potatoes')
+    suggestion = client.search_item('c')
+    print(suggestion)
