@@ -1,7 +1,6 @@
 import logging
 from app.structures.hash_table import HashTable
 
-
 LOG = logging.getLogger(__name__)
 
 
@@ -40,14 +39,38 @@ class Client:
         if self.store.add_stock(item_key, cart_item.quantity):
             self.cart.delete(item_key)
 
-    def increment_quantity(self, item, quantity):
-        pass
+    def select_options(self):
+        selecting = True
+        while selecting:
+            print("\n### Please select one of the following options:\n\t1. Store item search"
+                  "\n\t2. Item search suggestion\n\t3. View/edit cart items\n\t4. Exit store")
+            option_selected = input("Type your option here: ")
 
-    def decrease_quantity(self, item, quantity):
-        pass
+            if option_selected == '1':
+                self.store.store_item_search()
+            elif option_selected == '2':
+                self.search_item()
+            elif option_selected == '3':
+                pass
+            elif option_selected == '4':
+                print("\n~~~ Thanks for your visit! ~~~")
+                selecting = False
+            else:
+                print("Invalid option\n")
 
-    def search_item(self, search_term):
-        return self.store.autocomplete(search_term)
+    def search_item(self):
+        print("\n### Item search suggestion")
+        while True:
+            search_term = input(
+                "Type the first character(s) for your search to see an item suggestion "
+                "(i.e. 'ap', 'c') or type QUIT to exit the search: ")
 
-    def checkout(self):
-        pass
+            if search_term == 'QUIT':
+                break
+
+            suggestion = self.store.autocomplete(search_term)
+
+            if suggestion:
+                print(f"Item suggestion: {suggestion}")
+            else:
+                print(f"Could not find a match for '{search_term}'")

@@ -9,6 +9,9 @@ class StoreItem:
         self.name = name
         self.stock = stock
 
+    def display(self):
+        print(f"Item: {self.name}. Stock: {self.stock}")
+
 
 class Store:
     def __init__(self, store_location, size):
@@ -46,6 +49,22 @@ class Store:
             item.stock -= quantity
             return True
         return False
+
+    def store_item_search(self):
+        print("\n### Store item search")
+        while True:
+            item_searched = input(
+                "Type an item name (i.e. strawberries, cherries, bananas) or type QUIT to exit the search: ")
+
+            if item_searched == 'QUIT':
+                break
+
+            found = self.find_item(item_searched)
+
+            if found:
+                found.display()
+            else:
+                print(f"Item {item_searched} was not found")
 
     def autocomplete(self, term):
         return self.items_trie.find_next_matching_item_name(term)

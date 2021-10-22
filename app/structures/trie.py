@@ -34,7 +34,7 @@ class Trie:
             if current_node.children[index] is not None:
                 current_node = current_node.children[index]
             else:
-                LOG.info('No words found for prefix')
+                LOG.debug('No words found for prefix')
                 return None
         return current_node
 
