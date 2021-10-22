@@ -1,7 +1,7 @@
 import unittest
 
 from app.exceptions import StructureIsFullError
-from app.hash_table import HashTable
+from app.structures.hash_table import HashTable
 from app.store import StoreItem
 
 
