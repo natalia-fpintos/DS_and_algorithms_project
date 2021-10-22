@@ -30,7 +30,10 @@ class Trie:
     def find_node(self, prefix):
         current_node = self.root
         for letter in prefix:
-            index = ascii_lowercase.index(letter)
+            try:
+                index = ascii_lowercase.index(letter)
+            except ValueError:
+                return None
             if current_node.children[index] is not None:
                 current_node = current_node.children[index]
             else:

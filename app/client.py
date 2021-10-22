@@ -10,11 +10,8 @@ class CartItem:
         self.name = name
         self.quantity = quantity
 
-    def increment_quantity_by(self, quantity):
-        self.quantity += quantity
-
-    def decrease_quantity_by(self, quantity):
-        self.quantity -= quantity
+    def display(self):
+        print(f"Item: {self.name}. Quantity: {self.quantity}")
 
 
 class Client:
@@ -42,6 +39,19 @@ class Client:
         if self.store.add_stock(item_key, cart_item.quantity):
             self.cart.delete(item_key)
 
+    def validate_quantity(self, quantity):
+        try:
+            quantity = int(quantity)
+        except ValueError:
+            print("Please enter a valid amount")
+            return
+
+        if quantity not in list(range(1, 6)):
+            print("Please enter a valid amount")
+            return
+
+        return quantity
+
     def select_options(self):
         selecting = True
         while selecting:
@@ -54,7 +64,7 @@ class Client:
             elif option_selected == '2':
                 self.suggest_item()
             elif option_selected == '3':
-                pass
+                self.view_edit_cart()
             elif option_selected == '4':
                 print("\n~~~ Thanks for your visit! ~~~")
                 selecting = False
@@ -103,24 +113,24 @@ class Client:
 
         if add_item == 'y':
             quantity = input("Please enter amount to add to the cart (max 5): ")
-            try:
-                quantity = int(quantity)
-            except ValueError:
-                print("Please enter a valid amount")
-                return
+            quantity = self.validate_quantity(quantity)
 
-            if quantity not in list(range(1, 6)):
-                print("Please enter a valid amount")
+            if quantity:
+                self.add_item_to_cart(item, quantity)
+            else:
                 return
-
-            self.add_item_to_cart(item, int(quantity))
         else:
             print("Item will not be added to the cart")
 
     def view_edit_cart(self):
         print("\n### View/edit cart items")
         while True:
-            action = input(" or type QUIT to exit the cart: ")
+            print("\nCart:")
+            self.cart.display_all()
 
-            if action == 'QUIT':
+            user_input = input("\nType the name of an item to remove it or type QUIT to exit the cart: ")
+
+            if user_input == 'QUIT':
                 break
+            else:
+                self.cart.delete(user_input)

@@ -19,8 +19,3 @@ if __name__ == '__main__':
 
     client = Client(store)
     client.select_options()
-
-    client.add_item_to_cart('water')
-    client.add_item_to_cart('potatoes', 3)
-    client.add_item_to_cart('cookies', 4)
-    client.remove_item_from_cart('potatoes')

@@ -50,16 +50,17 @@ class HashTable:
         self.count += 1
 
     def _find_index(self, key):
-        simple_hash_key = self.simple_hashing(key)
-        second_hash_key = self.double_hashing(key)
-        i = 0
-        index = simple_hash_key
-        while self.data[index] is not None:
-            if self.data[index].key == key:
-                LOG.debug(f"Item '{key}' found at index {index}")
-                return index
-            i += 1
-            index = (simple_hash_key + (i * second_hash_key)) % self.size
+        if key is not None:
+            simple_hash_key = self.simple_hashing(key)
+            second_hash_key = self.double_hashing(key)
+            i = 0
+            index = simple_hash_key
+            while self.data[index] is not None:
+                if self.data[index].key == key:
+                    LOG.debug(f"Item '{key}' found at index {index}")
+                    return index
+                i += 1
+                index = (simple_hash_key + (i * second_hash_key)) % self.size
 
     def find_item(self, key):
         index = self._find_index(key)
@@ -67,5 +68,15 @@ class HashTable:
 
     def delete(self, key):
         index = self._find_index(key)
-        self.data[index] = None
-        self.count -= 1
+        if index:
+            self.data[index] = None
+            self.count -= 1
+        else:
+            print("Not found")
+
+    def display_all(self):
+        if self.is_empty():
+            print("Empty")
+        for i in self.data:
+            if i:
+                i.display()
