@@ -5,12 +5,13 @@ LOG = logging.getLogger(__name__)
 
 
 class HashTable:
+    HASHING_BASE = 255
+
     def __init__(self, size):
         """Size must be a prime number to prevent infinite loop when probing for insertion"""
         self.data = [None for _ in range(size)]
         self.size = size
         self.count = 0
-        self.hashing_base = 255
         self.collisions = 0
 
     def is_full(self):
@@ -22,7 +23,7 @@ class HashTable:
     def _numeric_repr(self, key):
         result = 0
         for i, v in enumerate(reversed(key)):
-            result += ord(v) * (self.hashing_base ** i)
+            result += ord(v) * (self.HASHING_BASE ** i)
         return result
 
     def simple_hashing(self, key):
